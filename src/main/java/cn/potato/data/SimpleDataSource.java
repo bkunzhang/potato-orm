@@ -25,7 +25,8 @@ import java.util.Properties;
  */
 public class SimpleDataSource implements DataSource {
 	private static final Logger log =  LoggerFactory.getLogger(SimpleDataSource.class);
-	
+
+	//这里用了支持多线程的List ！！
 	private List<Connection> pool = Collections.synchronizedList(new LinkedList<Connection>());
 	
 	private static String DEFAULT_PROPERTIES_FILE_NAME = "application.properties";//默认的框架配置文件
@@ -77,6 +78,7 @@ public class SimpleDataSource implements DataSource {
 			while(quantity > 0){
 				Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
 				pool.add(connection);
+				//循环添加连接到池中，没毛病，一开始看错
 				--quantity;
 			}
 	}
